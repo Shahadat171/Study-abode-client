@@ -1,6 +1,16 @@
 import { Link } from "react-router-dom";
 import logo from "../../../assets/logo-college.png";
+import { useContext } from "react";
+import { AuthContext } from "../../../Providers/AuthProviders";
 const Navbar = () => {
+  const { user, logOut } = useContext(AuthContext);
+  const handleLogOut = () => {
+    logOut()
+      .then(() => {})
+      .catch((error) => {
+        console.error(error);
+      });
+  };
   return (
     <div>
       {/* StudyAbode */}
@@ -14,12 +24,33 @@ const Navbar = () => {
             </span>
           </a>
           <div className="flex md:order-2">
-            <button
-              type="button"
-              className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-            >
-              Login
-            </button>
+            {user ? (
+              <div className="font-sans flex flex-row-reverse justify-center items-center gap-x-5">
+                <button
+                  onClick={handleLogOut}
+                  type="button"
+                  className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                >
+                  Log Out
+                </button>
+                <span>
+                  <img
+                    className="mr-4 h-8 w-8 rounded-full"
+                    src={user.photoURL}
+                  />
+                </span>
+              </div>
+            ) : (
+              <Link to="/login">
+                <button
+                  type="button"
+                  className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                >
+                  Login
+                </button>
+              </Link>
+            )}
+
             <button
               data-collapse-toggle="navbar-sticky"
               type="button"
