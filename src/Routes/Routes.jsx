@@ -10,6 +10,7 @@ import PrivateRoutes from "./PrivateRoutes";
 import AllColleges from "../Pages/AllColleges/AllColleges";
 import Admission from "../Pages/Admission/Admission";
 import GetAdmitted from "../Pages/Admission/GetAdmitted";
+import MyCollege from "../Pages/MyCollege/MyCollege";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -21,19 +22,27 @@ const router = createBrowserRouter([
       },
       {
         path: "/colleges",
-        element: <AllColleges></AllColleges>
+        element: <AllColleges></AllColleges>,
       },
       {
         path: "/AllColleges",
-        element: <AllColleges></AllColleges>
+        element: <AllColleges></AllColleges>,
+      },
+      {
+        path: "/myCollege",
+        element: (
+          <PrivateRoutes>
+            <MyCollege></MyCollege>
+          </PrivateRoutes>
+        ),
       },
       {
         path: "/admission",
-        element: <Admission></Admission>
+        element: <Admission></Admission>,
       },
       {
         path: "/getAdmitted",
-        element: <GetAdmitted></GetAdmitted>
+        element: <GetAdmitted></GetAdmitted>,
       },
       {
         path: "/login",
@@ -50,7 +59,8 @@ const router = createBrowserRouter([
             <CollageDetails></CollageDetails>
           </PrivateRoutes>
         ),
-        loader : ({params}) => fetch(`http://localhost:5000/details/${params.id}`)
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/details/${params.id}`),
       },
     ],
   },

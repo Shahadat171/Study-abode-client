@@ -1,6 +1,41 @@
-import React from "react";
+import Swal from "sweetalert2";
 
 const GetAdmitted = () => {
+  const handleAddmission = (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const name = form.name.value;
+    const image = form.photo.value;
+    const subject = form.subject.value;
+    const email = form.email.value;
+    const number = form.number.value;
+    const address = form.address.value;
+    const date = form.date.value;
+    const College = form.College.value;
+
+    const students = { name, image, College, subject, number, address, email, date };
+    console.log(students);
+
+    fetch("http://localhost:5000/addmission", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(students),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.insertedId) {
+          Swal.fire(
+            "Added",
+            "Your Information has added Successfully",
+            "success"
+          );
+          form.reset();
+        }
+      });
+  };
   return (
     <div>
       <section className="bg-gray-50 dark:bg-gray-900 h-[100vh]">
@@ -10,7 +45,11 @@ const GetAdmitted = () => {
               <h1 className="text-xl text-center font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                 Give Your Information
               </h1>
-              <form className="space-y-4 md:space-y-6" action="#">
+              <form
+                onSubmit={handleAddmission}
+                className="space-y-4 md:space-y-6"
+                action="#"
+              >
                 <div className="grid grid-cols-2 gap-x-10 gap-y-5">
                   <div>
                     <label
@@ -116,13 +155,33 @@ const GetAdmitted = () => {
                       Date Of Birth
                     </label>
                     <input
-                     type="date"
+                      type="date"
                       name="date"
                       id="confirm-password"
                       placeholder="Your Number"
                       className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       required=""
                     />
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="confirm-password"
+                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >
+                      College Name
+                    </label>
+                    <select
+                      name="College"
+                      id="countries"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    >
+                      <option>Oxford University</option>
+                      <option>Nodre dam College</option>
+                      <option>Harvard University</option>
+                      <option>Columbia University</option>
+                      <option>Duke University</option>
+                      <option>Purdue University</option>
+                    </select>
                   </div>
                 </div>
                 <button

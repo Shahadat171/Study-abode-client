@@ -20,7 +20,8 @@
     "react-rating": "^2.0.5",
     "react-router-dom": "^6.14.2",
     "react-tooltip": "^5.18.1",
-    "sort-by": "^1.2.0"
+    "sort-by": "^1.2.0",
+    "sweetalert2": "^11.7.20"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",
